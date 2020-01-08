@@ -41,7 +41,7 @@
 	{
 		echo "Error: " . mysqli_error($conn) . '<br>';
 	}
-	//таблица #2 тип услуги (товары) 
+	//таблица #2 товары 
 	$sql = "CREATE TABLE product(
 		id_product SERIAL PRIMARY KEY,
 		name_product text NOT NULL,
@@ -72,7 +72,7 @@
 	{
 		echo "Error: " . mysqli_error($conn) . '<br>';
 	}
-	//таблица #4 владелец (покупатель)
+	//таблица #4 покупатель
 	$sql = "CREATE TABLE buyer(
 		id_buyer SERIAL PRIMARY KEY,
 		fio_buyer text NOT NULL,
@@ -86,7 +86,7 @@
 	{
 		echo "Error: " . mysqli_error($conn) . '<br>';
 	}
-	//таблица #5 автомобиль (заказ)
+	//таблица #5 заказ
 	$sql = "CREATE TABLE orders(
 		num_order SERIAL PRIMARY KEY,
 		description_order text,
@@ -100,7 +100,7 @@
 	{
 		echo "Error: " . mysqli_error($conn) . '<br>';
 	}
-	//таблица #6 сервисы  (аптеки) 
+	//таблица #6 аптеки 
 	$sql = "CREATE TABLE drugstore(
 		id_drugstore SERIAL PRIMARY KEY,
 		drugstore_adress text,
@@ -114,7 +114,7 @@
 	{
 		echo "Error: " . mysqli_error($conn) . '<br>';
 	}
-	//таблица #7 обслуживающий сервис (обслуживающая аптека)
+	//таблица #7 обслуживающая аптека
 	$sql = "CREATE TABLE maintenance_drugstore(
 		id_main SERIAL PRIMARY KEY,
 		id_maintenance_drugstore integer REFERENCES drugstore (id_drugstore),
@@ -136,7 +136,7 @@
 	//       ТРИГГЕРЫ УДАЛЕНИЯ
 	//
 	
-	//триггер #1 удаление владельца
+	//триггер #1 удаление buyer
 	$sql = "CREATE TRIGGER remove_buyer AFTER DELETE ON buyer
 			FOR EACH ROW BEGIN
 			   DELETE FROM orders WHERE buyer = OLD.id_buyer;
@@ -150,7 +150,7 @@
 	{
 		echo "Error: " . mysqli_error($conn) . '<br>';
 	}
-	//триггер #2 удаление машины
+	//триггер #2 удаление order
 	$sql = "CREATE TRIGGER remove_order AFTER DELETE ON orders
 			FOR EACH ROW BEGIN
 			   DELETE FROM maintenance_drugstore WHERE order_id = OLD.num_order;
@@ -164,7 +164,7 @@
 	{
 		echo "Error: " . mysqli_error($conn) . '<br>';
 	}
-	//триггер #3 удаление должности
+	//триггер #3 удаление positions
 	$sql = "CREATE TRIGGER remove_positions AFTER DELETE ON positions
 			FOR EACH ROW BEGIN
 			   DELETE FROM workers WHERE position = OLD.id_position;
@@ -178,7 +178,7 @@
 	{
 		echo "Error: " . mysqli_error($conn) . '<br>';
 	}
-	//триггер #4 удаление работника
+	//триггер #4 удаление workers
 	$sql = "CREATE TRIGGER remove_workers AFTER DELETE ON workers
 			FOR EACH ROW BEGIN
 			   DELETE FROM maintenance_drugstore WHERE worker = OLD.id_worker;
@@ -192,7 +192,7 @@
 	{
 		echo "Error: " . mysqli_error($conn) . '<br>';
 	}
-	//триггер #5 удаление сервисов
+	//триггер #5 удаление drugstore
 	$sql = "CREATE TRIGGER remove_drugstore AFTER DELETE ON drugstore
 			FOR EACH ROW BEGIN
 			   DELETE FROM maintenance_drugstore WHERE id_maintenance_drugstore = OLD.id_drugstore;
@@ -206,7 +206,7 @@
 	{
 		echo "Error: " . mysqli_error($conn) . '<br>';
 	}
-	//триггер #6 удаление услуг
+	//триггер #6 удаление product
 	$sql = "CREATE TRIGGER remove_product AFTER DELETE ON product
 			FOR EACH ROW BEGIN
 			   DELETE FROM maintenance_drugstore WHERE product = OLD.id_product;
@@ -225,7 +225,7 @@
 	//       ТРИГГЕРЫ ИЗМЕНЕНИЯ
 	//
 	
-	//триггер #1 изменение владельца
+	//триггер #1 изменение buyer
 	$sql = "CREATE TRIGGER update_buyer AFTER UPDATE ON buyer
 			FOR EACH ROW BEGIN
 			   UPDATE orders SET buyer = NEW.id_buyer WHERE buyer = OLD.id_buyer;
@@ -239,7 +239,7 @@
 	{
 		echo "Error: " . mysqli_error($conn) . '<br>';
 	}
-	//триггер #2 изменение машины
+	//триггер #2 изменение order
 	$sql = "CREATE TRIGGER update_order AFTER UPDATE ON orders
 			FOR EACH ROW BEGIN
 			   UPDATE maintenance_drugstore SET order_id = NEW.num_order WHERE order_id = OLD.num_order; 
@@ -253,7 +253,7 @@
 	{
 		echo "Error: " . mysqli_error($conn) . '<br>';
 	}
-	//триггер #3 изменение должности
+	//триггер #3 изменение positions
 	$sql = "CREATE TRIGGER update_positions AFTER UPDATE ON positions
 			FOR EACH ROW BEGIN
 			   UPDATE workers SET position = NEW.id_position WHERE position = OLD.id_position;
@@ -267,7 +267,7 @@
 	{
 		echo "Error: " . mysqli_error($conn) . '<br>';
 	}
-	//триггер #4 изменение работника
+	//триггер #4 изменение workers
 	$sql = "CREATE TRIGGER update_workers AFTER UPDATE ON workers
 			FOR EACH ROW BEGIN
 			   UPDATE maintenance_drugstore SET worker = NEW.id_worker WHERE worker = OLD.id_worker;
@@ -281,7 +281,7 @@
 	{
 		echo "Error: " . mysqli_error($conn) . '<br>';
 	}
-	//триггер #5 изменение сервисов
+	//триггер #5 изменение drugstore
 	$sql = "CREATE TRIGGER update_drugstore AFTER UPDATE ON drugstore
 			FOR EACH ROW BEGIN
 			   UPDATE maintenance_drugstore SET id_maintenance_drugstore = NEW.id_drugstore WHERE id_maintenance_drugstore = OLD.id_drugstore;
@@ -295,7 +295,7 @@
 	{
 		echo "Error: " . mysqli_error($conn) . '<br>';
 	}
-	//триггер #6 изменение услуг
+	//триггер #6 изменение product
 	$sql = "CREATE TRIGGER update_product AFTER UPDATE ON product
 			FOR EACH ROW BEGIN
 			   UPDATE maintenance_drugstore SET product = NEW.id_product WHERE product = OLD.id_product;
