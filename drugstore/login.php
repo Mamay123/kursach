@@ -9,19 +9,19 @@
 	$password = md5($password);
 	if ($conn)
 	{
-		$result =$conn->prepare("SELECT privilege FROM tb1 WHERE email_adress = ?");
+		$result =$conn->prepare("SELECT privilege, password FROM tb1 WHERE email_adress = ?");
 		$result->bind_param("s", $_POST['user_name']);
 		$result->execute();
 		$result = $result->get_result();
 		if ($result)
 		{
 			$all = $result->fetch_all();
-			$result =$conn->prepare("SELECT password FROM tb1 WHERE email_adress = ?");
-			$result->bind_param("s", $_POST['user_name']);
-			$result->execute();
-			$result = $result->get_result();
-			$p = $result->fetch_all();
-			if($p[0][0] === $password)
+			//$result =$conn->prepare("SELECT password FROM tb1 WHERE email_adress = ?");
+			//$result->bind_param("s", $_POST['user_name']);
+			//$result->execute();
+			//$result = $result->get_result();
+			//$p = $result->fetch_all();
+			if($all[0][1] === $password)
 			{
 				if ($all[0][0] === 1)
 				{
