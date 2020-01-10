@@ -34,12 +34,12 @@
 							<form action = 'select_tb1.php' method = 'post'>
 								<label for='num'>Выберите: </label><select name='num' id='num'>
 									<?php
-										$sql = "SELECT * FROM tb1";
+										$sql = "SELECT count(*) FROM tb1";
 										$res = mysqli_query($conn, $sql);
 										if ($res)
 										{
 											$all = mysqli_fetch_all($res);
-											$count = count($all);
+											$count = $all['count(*)'];
 											$int = intval($count/50);
 											$drob = ($count/50)-intval($count/50);
 											if($drob === 0)
@@ -142,12 +142,12 @@
 							<form action = 'select_tb1.php' method = 'post'>
 								<label for='num'>Выберите: </label><select name='num' id='num'>
 									<?php
-										$sql = "SELECT * FROM tb1";
+										$sql = "SELECT count(*) FROM tb1";
 										$res = mysqli_query($conn, $sql);
 										if ($res)
 										{
 											$all = mysqli_fetch_all($res);
-											$count = count($all);
+											$count = $all['count(*)'];
 											$int = intval($count/50);
 											$drob = ($count/50)-intval($count/50);
 											if($drob === 0)

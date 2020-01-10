@@ -34,12 +34,12 @@
 							<form action = 'select_positions.php' method = 'post'>
 								<label for='num'>Выберите: </label><select name='num' id='num'>
 									<?php
-										$sql = "SELECT * FROM positions";
+										$sql = "SELECT count(*) FROM positions";
 										$res = mysqli_query($conn, $sql);
 										if ($res)
 										{
 											$all = mysqli_fetch_all($res);
-											$count = count($all);
+											$count = $all['count(*)'];
 											$int = intval($count/50);
 											$drob = ($count/50)-intval($count/50);
 											if($drob === 0)
@@ -143,12 +143,12 @@
 							<form action = 'select_positions.php' method = 'post'>
 								<label for='num'>Выберите: </label><select name='num' id='num'>
 									<?php
-										$sql = "SELECT * FROM positions";
+										$sql = "SELECT count(*) FROM positions";
 										$res = mysqli_query($conn, $sql);
 										if ($res)
 										{
 											$all = mysqli_fetch_all($res);
-											$count = count($all);
+											$count = $all['count(*)'];
 											$int = intval($count/50);
 											$drob = ($count/50)-intval($count/50);
 											if($drob === 0)
