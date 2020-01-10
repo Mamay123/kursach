@@ -1,8 +1,8 @@
 <?php
 	$servername = "localhost";
 	$dbname = "drugstore";
-	$username = "root";
-	$password = "";
+	$username = "admin";
+	$password = "6VEAFLMrPB14K3a";
 	set_time_limit(600);
 	
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
