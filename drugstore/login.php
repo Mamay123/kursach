@@ -2,7 +2,7 @@
 	$_SESSION['user_name'] = $_POST['user_name'];
 	$_SESSION['password'] = $_POST['password'];
 	require_once 'connection.php';
-	$conn = mysqli_connect($servername, 'root', '', $dbname);
+	$conn = mysqli_connect($servername, 'admin', '6VEAFLMrPB14K3a', $dbname);
 	session_start();
 	$user = $_POST['user_name'];
 	$password = $_POST['password'];
