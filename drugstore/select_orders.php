@@ -53,7 +53,8 @@
 											for($k = 0;$k < $f; $k++)
 											{
 												$s = $k+1;
-												echo "<option value=". $s .">". $s ."</option>";
+												$s1 = $k * 50;
+												echo "<option value=". $s1 .">". $s ."</option>";
 											}
 										}
 									?>
@@ -64,26 +65,36 @@
 							<?php
 								if($_POST['column']!== NULL)
 								{
+									$os = array("num_order", "description_order", "name_buyer");
+									if(!in_array($_POST['column'], $os))
+									{
+										$_POST['column'] = "num_order";
+									}
+									$column = strval($_POST['column']);
 									if($_SESSION['column'] !== $_POST['column'])
 									{
 										if($_POST['num'] === NULL)
 										{
-											$pos = "SELECT * FROM orders ORDER BY ".$_POST['column']." ASC LIMIT 50";
+											$pos = $conn->prepare("SELECT * FROM orders ORDER BY $column ASC LIMIT 50");
+											//$pos->bind_param("s", $_POST['column']);
 										}
 										else 
 										{
-											$pos = "SELECT * FROM orders ORDER BY ".$_POST['column']." ASC LIMIT 50 OFFSET ".$_POST['num'];
+											$pos = $conn->prepare("SELECT * FROM orders ORDER BY $column ASC LIMIT 50 OFFSET ?");
+											$pos->bind_param("s", $_POST['num']);
 										}
 									}
 									else
 									{
 										if($_POST['num'] === NULL)
 										{
-											$pos = "SELECT * FROM orders ORDER BY ".$_POST['column']." DESC LIMIT 50";
+											$pos = $conn->prepare("SELECT * FROM orders ORDER BY $column DESC LIMIT 50");
+											//$pos->bind_param("s", $_POST['column']);
 										}
 										else 
 										{
-											$pos = "SELECT * FROM orders ORDER BY ".$_POST['column']." DESC LIMIT 50 OFFSET ".$_POST['num'];
+											$pos = $conn->prepare("SELECT * FROM orders ORDER BY $column DESC LIMIT 50 OFFSET ?");
+											$pos->bind_param("s", $_POST['num']);
 										}
 									}
 									$_SESSION['column'] = $_POST['column'];
@@ -92,19 +103,23 @@
 								{
 									if($_POST['num'] === NULL)
 									{
-										$pos = "SELECT * FROM orders LIMIT 50";
+										$pos = $conn->prepare("SELECT * FROM orders LIMIT 50");
 									}
 									else 
 									{
-										$pos = "SELECT * FROM orders LIMIT 50 OFFSET ".$_POST['num'];
+										$pos = $conn->prepare("SELECT * FROM orders LIMIT 50 OFFSET ?");
+										$pos->bind_param("s", $_POST['num']);
 									}
 								}
-								$q = mysqli_query($conn,'DESCRIBE orders');
-								$arr = mysqli_fetch_all($q);
-								$result = mysqli_query($conn, $pos);
+								$pos1 = $conn->prepare("DESCRIBE orders");
+								$result = $pos1->execute();
+								$q = $pos1->get_result();
+								$arr = $q->fetch_all();
+								$result = $pos->execute();
 								if ($result)
 								{
-									$val = mysqli_fetch_all($result);
+									$resultSet = $pos->get_result();
+									$val = $resultSet->fetch_all();
 									echo "<tr>";
 									for($i = 0;$i < count($arr); $i = $i+1)
 									{
@@ -147,7 +162,8 @@
 											for($k = 0;$k < $f; $k++)
 											{
 												$s = $k+1;
-												echo "<option value=". $s .">". $s ."</option>";
+												$s1 = $k * 50;
+												echo "<option value=". $s1 .">". $s ."</option>";
 											}
 										}
 									?>
