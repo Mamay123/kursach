@@ -12,6 +12,12 @@
 	{
 		$all = mysqli_fetch_all($result);
 	}
+	$pos = "SELECT name_product FROM product";
+	$result = mysqli_query($conn, $pos);
+	if ($result)
+	{
+		$all2 = mysqli_fetch_all($result);
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,7 +31,21 @@
 				<form action='add_orders.php' method='post'>
 					
 						<legend>Новая запись</legend>	
-							<label for='description_order'>Покупка: </label><br><input type='text' id='description_order' name='description_order' placeholder='description_order'><br>
+							<label for='description_order'>Покупка: </label><br><select id='description_order' name='description_order'>
+								<?php
+									for($i = 0;$i < count($all2); $i = $i+1)
+									{
+										$pos = "SELECT id_product FROM product WHERE name_product = '".$all2[$i][0]."'";
+										$res = mysqli_query($conn, $pos);
+										if ($res)
+										{
+											$val = mysqli_fetch_all($res);
+											$j = $i + 1;
+											echo "<option value='".$val[0][0]."'>".$all2[$i][0]."</option>";
+										}
+									}
+								?>
+							</select><br>
 							<label for='buyer'>Покупатель: </label><br><select name='buyer' id='owner'>
 								<?php
 									for($i = 0;$i < count($all); $i = $i+1)

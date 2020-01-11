@@ -89,7 +89,7 @@
 	//таблица #5 заказ
 	$sql = "CREATE TABLE orders(
 		num_order SERIAL PRIMARY KEY,
-		description_order text,
+		description_order integer NOT NULL,
 		name_buyer integer REFERENCES buyer (id_buyer))";
 
 	if (mysqli_query($conn, $sql))
@@ -139,7 +139,7 @@
 	//триггер #1 удаление buyer
 	$sql = "CREATE TRIGGER remove_buyer AFTER DELETE ON buyer
 			FOR EACH ROW BEGIN
-			   DELETE FROM orders WHERE buyer = OLD.id_buyer;
+			   DELETE FROM orders WHERE name_buyer = OLD.id_buyer;
 			END";
 
 	if (mysqli_query($conn, $sql))
@@ -228,7 +228,7 @@
 	//триггер #1 изменение buyer
 	$sql = "CREATE TRIGGER update_buyer AFTER UPDATE ON buyer
 			FOR EACH ROW BEGIN
-			   UPDATE orders SET buyer = NEW.id_buyer WHERE buyer = OLD.id_buyer;
+			   UPDATE orders SET name_buyer = NEW.id_buyer WHERE name_buyer = OLD.id_buyer;
 			END";
 
 	if (mysqli_query($conn, $sql))
