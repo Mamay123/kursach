@@ -38,7 +38,7 @@
 										$res = mysqli_query($conn, $sql);
 										if ($res)
 										{
-											$all = mysqli_fetch_all($res);
+											$all = mysqli_fetch_assoc($res);
 											$count = $all['count(*)'];
 											$int = intval($count/50);
 											$drob = ($count/50)-intval($count/50);
@@ -81,7 +81,7 @@
 										else 
 										{
 											$pos = $conn->prepare("SELECT * FROM tb1 ORDER BY $column ASC LIMIT 50 OFFSET ?");
-											$pos->bind_param('ss', $_POST['num']);
+											$pos->bind_param('s', $_POST['num']);
 										}
 									}
 									else
@@ -146,7 +146,7 @@
 										$res = mysqli_query($conn, $sql);
 										if ($res)
 										{
-											$all = mysqli_fetch_all($res);
+											$all = mysqli_fetch_assoc($res);
 											$count = $all['count(*)'];
 											$int = intval($count/50);
 											$drob = ($count/50)-intval($count/50);
