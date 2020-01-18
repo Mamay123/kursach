@@ -4,7 +4,7 @@
 	{
 		header('location: index.php');
 	}
-	$_SESSION['orders'] = $_POST['orders'];
+	$_SESSION['orders'] = htmlspecialchars($_POST['orders'], ENT_QUOTES);
 	require_once 'connection.php';
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
 	$pos = "SELECT id_drugstore FROM drugstore";

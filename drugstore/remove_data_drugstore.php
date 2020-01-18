@@ -34,7 +34,7 @@
 										if ($result)
 										{
 											$val = mysqli_fetch_all($result);
-											echo "<option value='".$all[$i][0]."'>ID Аптеки: ".$val[$i][0].", Адрес Аптеки: ".$val[$i][1].", Номер телефона Аптеки: ".$val[$i][2]."</option>";
+											echo "<option value='".$val[$i][0]."'>ID Аптеки: ".$val[$i][0].", Адрес Аптеки: ".$val[$i][1].", Номер телефона Аптеки: ".$val[$i][2]."</option>";
 										}
 									}
 								?>

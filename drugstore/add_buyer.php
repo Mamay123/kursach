@@ -8,7 +8,7 @@
 	
 	$conn = new mysqli($servername, $username, $password, $dbname);
 	$result =$conn->prepare("INSERT INTO buyer (fio_buyer, phone_number_buyer) VALUES ( ?, ?)");
-	$result->bind_param("ss", $_POST['fio_buyer'], $_POST['phone_number_buyer']);
+	$result->bind_param("ss", htmlspecialchars($_POST['fio_buyer'], ENT_QUOTES), htmlspecialchars($_POST['phone_number_buyer'], ENT_QUOTES));
 	if ($result->execute() === TRUE)
 	{
 		echo "<script type='text/javascript'>alert('Record created!');</script>";

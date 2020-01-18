@@ -6,7 +6,7 @@
 	}
 	require_once 'connection.php';
 	$conn = new mysqli($servername, $username, $password, $dbname);
-	$result =$conn->prepare("DELETE FROM maintenance_drugstore WHERE id_order = ?");
+	$result =$conn->prepare("DELETE FROM maintenance_drugstore WHERE id_main = ?");
 	$result->bind_param("s", $_POST['orders']);
 	if ($result->execute() === TRUE)
 	{

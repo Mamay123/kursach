@@ -7,7 +7,7 @@
 	require_once 'connection.php';
 	$conn = new mysqli($servername, $username, $password, $dbname);
 	$result =$conn->prepare("UPDATE workers SET id_worker = ?, fio_worker = ?, position = ?, phone_number_worker = ?, worker_adress = ? WHERE id_worker = ?");
-	$result->bind_param("ssssss", $_POST['id_worker'], $_POST['fio_worker'], $_POST['position'], $_POST['phone_number_worker'], $_POST['worker_adress'], $_SESSION['workers']);
+	$result->bind_param("ssssss", htmlspecialchars($_POST['id_worker'], ENT_QUOTES), htmlspecialchars($_POST['fio_worker'], ENT_QUOTES), htmlspecialchars($_POST['position'], ENT_QUOTES), htmlspecialchars($_POST['phone_number_worker'], ENT_QUOTES), htmlspecialchars($_POST['worker_adress'], ENT_QUOTES), htmlspecialchars($_SESSION['workers'], ENT_QUOTES));
 	if ($result->execute() === TRUE)
 	{
 		echo "<script type='text/javascript'>alert('Record changed!');</script>";

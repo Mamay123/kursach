@@ -38,7 +38,7 @@
 										$res = mysqli_query($conn, $sql);
 										if ($res)
 										{
-											$all = mysqli_fetch_all($res);
+											$all = mysqli_fetch_assoc($res);
 											$count = $all['count(*)'];
 											$int = intval($count/50);
 											$drob = ($count/50)-intval($count/50);
@@ -63,52 +63,54 @@
 							</form >
 							<table class="brd">
 							<?php
-								if($_POST['column']!== NULL)
+								$column = htmlspecialchars($_POST['column'], ENT_QUOTES);
+								$num = htmlspecialchars($_POST['num'], ENT_QUOTES);
+								if($column!== NULL)
 								{
 									$os = array("id_product", "name_product", "price_product", "product_description");
-									if(!in_array($_POST['column'], $os))
+									if(!in_array($column, $os))
 									{
 										$column = "id_product";
 									}
-									$column = strval($_POST['column']);
-									if($_SESSION['column'] !== $_POST['column'])
+									$column = strval($column);
+									if($_SESSION['column'] !== $column)
 									{
-										if($_POST['num'] === NULL)
+										if($num === NULL)
 										{
 											$pos = $conn->prepare("SELECT * FROM product ORDER BY $column ASC LIMIT 50");
-											//$pos->bind_param("s", $_POST['column']);
+											//$pos->bind_param("s", $column);
 										}
 										else 
 										{
 											$pos = $conn->prepare("SELECT * FROM product ORDER BY $column ASC LIMIT 50 OFFSET ?");
-											$pos->bind_param("s", $_POST['num']);
+											$pos->bind_param("s", $num);
 										}
 									}
 									else
 									{
-										if($_POST['num'] === NULL)
+										if($num === NULL)
 										{
 											$pos = $conn->prepare("SELECT * FROM product ORDER BY $column DESC LIMIT 50");
-											//$pos->bind_param("s", $_POST['column']);
+											//$pos->bind_param("s", $column);
 										}
 										else 
 										{
 											$pos = $conn->prepare("SELECT * FROM product ORDER BY $column DESC LIMIT 50 OFFSET ?");
-											$pos->bind_param("s", $_POST['num']);
+											$pos->bind_param("s", $num);
 										}
 									}
-									$_SESSION['column'] = $_POST['column'];
+									$_SESSION['column'] = $column;
 								}
 								else
 								{
-									if($_POST['num'] === NULL)
+									if($num === NULL)
 									{
 										$pos = $conn->prepare("SELECT * FROM product LIMIT 50");
 									}
 									else 
 									{
 										$pos = $conn->prepare("SELECT * FROM product LIMIT 50 OFFSET ?");
-										$pos->bind_param("s", $_POST['num']);
+										$pos->bind_param("s", $num);
 									}
 								}
 								$pos1 = $conn->prepare("DESCRIBE product");
@@ -147,7 +149,7 @@
 										$res = mysqli_query($conn, $sql);
 										if ($res)
 										{
-											$all = mysqli_fetch_all($res);
+											$all = mysqli_fetch_assoc($res);
 											$count = $all['count(*)'];
 											$int = intval($count/50);
 											$drob = ($count/50)-intval($count/50);

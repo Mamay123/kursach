@@ -8,7 +8,7 @@
 	
 	$conn = new mysqli($servername, $username, $password, $dbname);
 	$result =$conn->prepare("INSERT INTO maintenance_drugstore VALUES (NULL, ?, ?, ?, ?, ?)");
-	$result->bind_param("sssss", $_POST['id_maintenance_drugstore'], $_POST['product'], $_POST['orders'], $_POST['availability_date'], $_POST['worker']);
+	$result->bind_param("sssss", htmlspecialchars($_POST['id_maintenance_drugstore'], ENT_QUOTES), htmlspecialchars($_POST['product'], ENT_QUOTES), htmlspecialchars($_POST['orders'], ENT_QUOTES), htmlspecialchars($_POST['availability_date'], ENT_QUOTES), htmlspecialchars($_POST['worker'], ENT_QUOTES));
 	if ($result->execute() === TRUE)
 	{
 		echo "<script type='text/javascript'>alert('Record created!');</script>";

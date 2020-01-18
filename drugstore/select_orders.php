@@ -30,7 +30,7 @@
         <div class="wrapper">
             <div id="article">
 				
-					<legend>Выборка по таблице cars.</legend>
+					<legend>Выборка по таблице orders.</legend>
 							<form action = 'select_orders.php' method = 'post'>
 								<label for='num'>Выберите: </label><select name='num' id='num'>
 									<?php
@@ -38,7 +38,7 @@
 										$res = mysqli_query($conn, $sql);
 										if ($res)
 										{
-											$all = mysqli_fetch_all($res);
+											$all = mysqli_fetch_assoc($res);
 											$count = $all['count(*)'];
 											$int = intval($count/50);
 											$drob = ($count/50)-intval($count/50);
@@ -63,52 +63,54 @@
 							</form >
 							<table class="brd">
 							<?php
-								if($_POST['column']!== NULL)
+								$column = htmlspecialchars($_POST['column'], ENT_QUOTES);
+								$num = htmlspecialchars($_POST['num'], ENT_QUOTES);
+								if($column!== NULL)
 								{
 									$os = array("num_order", "description_order", "name_buyer");
-									if(!in_array($_POST['column'], $os))
+									if(!in_array($column, $os))
 									{
-										$_POST['column'] = "num_order";
+										$column = "num_order";
 									}
-									$column = strval($_POST['column']);
-									if($_SESSION['column'] !== $_POST['column'])
+									$column = strval($column);
+									if($_SESSION['column'] !== $column)
 									{
-										if($_POST['num'] === NULL)
+										if($num === NULL)
 										{
 											$pos = $conn->prepare("SELECT * FROM orders ORDER BY $column ASC LIMIT 50");
-											//$pos->bind_param("s", $_POST['column']);
+											//$pos->bind_param("s", $column);
 										}
 										else 
 										{
 											$pos = $conn->prepare("SELECT * FROM orders ORDER BY $column ASC LIMIT 50 OFFSET ?");
-											$pos->bind_param("s", $_POST['num']);
+											$pos->bind_param("s", $num);
 										}
 									}
 									else
 									{
-										if($_POST['num'] === NULL)
+										if($num === NULL)
 										{
 											$pos = $conn->prepare("SELECT * FROM orders ORDER BY $column DESC LIMIT 50");
-											//$pos->bind_param("s", $_POST['column']);
+											//$pos->bind_param("s", $column);
 										}
 										else 
 										{
 											$pos = $conn->prepare("SELECT * FROM orders ORDER BY $column DESC LIMIT 50 OFFSET ?");
-											$pos->bind_param("s", $_POST['num']);
+											$pos->bind_param("s", $num);
 										}
 									}
-									$_SESSION['column'] = $_POST['column'];
+									$_SESSION['column'] = $column;
 								}
 								else
 								{
-									if($_POST['num'] === NULL)
+									if($num === NULL)
 									{
 										$pos = $conn->prepare("SELECT * FROM orders LIMIT 50");
 									}
 									else 
 									{
 										$pos = $conn->prepare("SELECT * FROM orders LIMIT 50 OFFSET ?");
-										$pos->bind_param("s", $_POST['num']);
+										$pos->bind_param("s", $num);
 									}
 								}
 								$pos1 = $conn->prepare("DESCRIBE orders");
@@ -147,7 +149,7 @@
 										$res = mysqli_query($conn, $sql);
 										if ($res)
 										{
-											$all = mysqli_fetch_all($res);
+											$all = mysqli_fetch_assoc($res);
 											$count = $all['count(*)'];
 											$int = intval($count/50);
 											$drob = ($count/50)-intval($count/50);

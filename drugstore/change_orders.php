@@ -7,7 +7,7 @@
 	require_once 'connection.php';
 	
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
-	$_SESSION['description_order'] = $_POST['description_order'];
+	$_SESSION['description_order'] = htmlspecialchars($_POST['description_order'], ENT_QUOTES);
 	require_once 'connection.php';
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
 	$pos = "SELECT fio_buyer FROM buyer";

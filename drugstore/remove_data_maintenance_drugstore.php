@@ -6,7 +6,7 @@
 	}
 	require_once 'connection.php';
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
-	$pos = "SELECT id_order FROM maintenance_drugstore";
+	$pos = "SELECT id_main FROM maintenance_drugstore";
 	$result = mysqli_query($conn, $pos);
 	if ($result)
 	{
@@ -52,7 +52,7 @@
 											{
 												$w = mysqli_fetch_all($res);
 											}
-											echo "<option value='".$all[$i][0]."'>ID заказа: ".$val[$i][0].", Номер аптеки: ".$val[$i][1].", Лекарство: ".$f[0][0].", заказ: ".$val[$i][3].", ".$d[0][0].", Дата готовности: ".$val[$i][4].", Работник: ".$w[0][0]."</option>";
+											echo "<option value='".$val[$i][0]."'>ID заказа: ".$val[$i][0].", Номер аптеки: ".$val[$i][1].", Лекарство: ".$f[0][0].", заказ: ".$val[$i][3].", ".$d[0][0].", Дата готовности: ".$val[$i][4].", Работник: ".$w[0][0]."</option>";
 										}
 									}
 								?>

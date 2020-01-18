@@ -63,17 +63,19 @@
 							</form >
 							<table class="brd">
 							<?php
-								if($_POST['column']!== NULL)
+								$column = htmlspecialchars($_POST['column'], ENT_QUOTES);
+								$num = htmlspecialchars($_POST['num'], ENT_QUOTES);
+								if($column!== NULL)
 								{
 									$os = array("fio", "adress", "email_adress", "password", "dtime", "privilege", "company");
-									if(!in_array($_POST['column'], $os))
+									if(!in_array($column, $os))
 									{
-										$_POST['column'] = "fio";
+										$column = "fio";
 									}
-									$column = strval($_POST['column']);
-									if($_SESSION['column'] !== $_POST['column'])
+									$column = strval($column);
+									if($_SESSION['column'] !== $column)
 									{
-										if($_POST['num'] === NULL)
+										if($num === NULL)
 										{
 											$pos = $conn->prepare("SELECT * FROM tb1 ORDER BY $column ASC LIMIT 50");
 											//$pos->bind_param("s", $column);										
@@ -81,33 +83,33 @@
 										else 
 										{
 											$pos = $conn->prepare("SELECT * FROM tb1 ORDER BY $column ASC LIMIT 50 OFFSET ?");
-											$pos->bind_param('s', $_POST['num']);
+											$pos->bind_param('s', $num);
 										}
 									}
 									else
 									{
-										if($_POST['num'] === NULL)
+										if($num === NULL)
 										{
 											$pos = $conn->prepare("SELECT * FROM tb1 ORDER BY $column DESC LIMIT 50");
 										}
 										else 
 										{
 											$pos = $conn->prepare("SELECT * FROM tb1 ORDER BY $column DESC LIMIT 50 OFFSET ?");
-											$pos->bind_param("s", $_POST['num']);
+											$pos->bind_param("s", $num);
 										}
 									}
-									$_SESSION['column'] = $_POST['column'];
+									$_SESSION['column'] = $column;
 								}
 								else
 								{
-									if($_POST['num'] === NULL)
+									if($num === NULL)
 									{
 										$pos = $conn->prepare("SELECT * FROM tb1 LIMIT 50");
 									}
 									else 
 									{
 										$pos = $conn->prepare("SELECT * FROM tb1 LIMIT 50 OFFSET ?");
-										$pos->bind_param("s", $_POST['num']);
+										$pos->bind_param("s", $num);
 									}
 								}
 								$pos1 = $conn->prepare("DESCRIBE tb1");

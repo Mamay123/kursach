@@ -34,7 +34,7 @@
 										if ($result)
 										{
 											$val = mysqli_fetch_all($result);
-											echo "<option value='".$all[$i][0]."'>ID должности: ".$val[$i][0].", Название должности: ".$val[$i][1].", Классификация по должности: ".$val[$i][2]."</option>";
+											echo "<option value='".$val[$i][0]."'>ID должности: ".$val[$i][0].", Название должности: ".$val[$i][1].", Классификация по должности: ".$val[$i][2]."</option>";
 										}
 									}
 								?>

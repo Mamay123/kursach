@@ -7,7 +7,7 @@
 	require_once 'connection.php';
 	
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
-	$_SESSION['workers'] = $_POST['workers'];
+	$_SESSION['workers'] = htmlspecialchars($_POST['workers'], ENT_QUOTES);
 	require_once 'connection.php';
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
 	$pos = "SELECT name_position FROM positions";

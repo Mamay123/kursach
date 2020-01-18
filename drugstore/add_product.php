@@ -8,7 +8,7 @@
 	
 	$conn = new mysqli($servername, $username, $password, $dbname);
 	$result =$conn->prepare("INSERT INTO product VALUES (NULL, ?, ?, ?)");
-	$result->bind_param("sss", $_POST['name_product'], $_POST['price_product'], $_POST['product_description']);
+	$result->bind_param("sss", htmlspecialchars($_POST['name_product'], ENT_QUOTES), htmlspecialchars($_POST['price_product'], ENT_QUOTES), htmlspecialchars($_POST['product_description'], ENT_QUOTES));
 	if ($result->execute() === TRUE)
 	{
 		echo "<script type='text/javascript'>alert('Record created!');</script>";

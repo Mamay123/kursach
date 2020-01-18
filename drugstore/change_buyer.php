@@ -7,7 +7,7 @@
 	require_once 'connection.php';
 	
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
-	$_SESSION['buyers'] = $_POST['buyers'];
+	$_SESSION['buyers'] = htmlspecialchars($_POST['buyers'], ENT_QUOTES);
 	
 ?>
 <!DOCTYPE html>

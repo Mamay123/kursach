@@ -13,7 +13,6 @@
 							<label for="user_name">Логин: </label><br><input type="text" id="user_name" name="user_name" placeholder="login"><br>
 							<label for="password">Пароль: </label><br><input type="password" id="password" name="password" placeholder="*******"><br>
 							<input type="submit" name="submit" value="Войти">
-						
 				</form>
             </div>
         </div>

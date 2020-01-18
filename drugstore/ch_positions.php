@@ -6,8 +6,8 @@
 	}
 	require_once 'connection.php';
 	$conn = new mysqli($servername, $username, $password, $dbname);
-	$result =$conn->prepare("UPDATE positions SET id_position = ?, name_position = ?, classification_lvl = ? WHERE id_position = ?");
-	$result->bind_param("ssss",  $_POST['id_position'], $_POST['name_position'], $_POST['classification_lvl'], $_SESSION['positions']);
+	$result =$conn->prepare("UPDATE positions SET id_position = ?, name_position = ?, description_positions = ? WHERE id_position = ?");
+	$result->bind_param("ssss",  htmlspecialchars($_POST['id_position'], ENT_QUOTES), htmlspecialchars($_POST['name_position'], ENT_QUOTES), htmlspecialchars($_POST['classification_lvl'], ENT_QUOTES), htmlspecialchars($_SESSION['positions'], ENT_QUOTES));
 	if ($result->execute() === TRUE)
 	{
 		echo "<script type='text/javascript'>alert('Record changed!');</script>";

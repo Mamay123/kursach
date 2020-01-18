@@ -7,7 +7,7 @@
 	require_once 'connection.php';
 	
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
-	$_SESSION['positions'] = $_POST['positions'];
+	$_SESSION['positions'] = htmlspecialchars($_POST['positions'], ENT_QUOTES);
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,7 +23,7 @@
 						<legend>Изменение записи</legend>
 							<label for="id_position">ID должности: </label><br><input type="text" id="id_position" name="id_position" placeholder="id_position"><br>
 							<label for="name_position">Название должности: </label><br><input type="text" id="name_position" name="name_position" placeholder="name_position"><br>
-							<label for="classification_lvl">Классификация по должности: </label><br><input type="text" id="classification_lvl" name="classification_lvl" placeholder="classification_lvl"><br>
+							<label for="classification_lvl">Описание должности: </label><br><input type="text" id="classification_lvl" name="classification_lvl" placeholder="classification_lvl"><br>
 							<input type="submit" name="submit" value="Изменить">
 						
 				</form>
